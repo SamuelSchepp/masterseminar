@@ -155,6 +155,39 @@ That means you will be able to run deep learning algorithms, that are developed 
 
 \subsection{TensorFlow.js}
 
+To train and deploy models for the browser or Node.js, there is the TensorFlow.js JavaScript package.
+It provides the common low-level algebra library and a high level, Keras-like API for building and running neural networks.
+In addition, it allows users to convert pre-existing TensorFlow models, to run them in the browser or in a Node.js environment.
+
+This allows JavaScript applications to directly integrate machine learning capabilities into their stack and out source computing power to the client devices, instead of the server.
+
+\subsubsection{Browser}
+
+The framework can be used directly as a script import from the CDN repository "https://www.jsdelivr.com",
+
+\begin{lstlisting}[caption={Loading TensorFlow.js in the browser via CDN}, language=HTML]
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.14.1/dist/tf.min.js"></script>
+\end{lstlisting}
+
+Now, the Keras API is available for usage and a model can be trained or ran on the browser's JavaScript engine.
+Hardware acceleration is available via WebGL, which provides a run performance, that is only two times slower then the native Python implementation.
+For large models, training is up to 15 times slower.
+
+\subsubsection{Node.js}
+
+For Node.js, there is another package available, which is called "tfjs-node".
+It uses the native C++ bindings of TensorFlow, but provides the same interface as the browser version.
+This enables developers to interchange TensorFlow code between browser and server, without any rewrites.
+
+To use the package, install it via NPM.
+
+\begin{lstlisting}[caption={Installing TensorFlow.js for Node.js}, language=bash]
+npm install @tensorflow/tfjs-node
+\end{lstlisting}
+
+The package has access to all of the common hardware accelaration interface of the operating system, like NVIDIA CUDA, which allows models to train and run on a graphics card.
+That means, that is is possible to write JavaScript neural network code, which runs with maximum performance.
+
 \subsection{TensorFlow lite}
 
 \subsection{Limits}
