@@ -190,6 +190,36 @@ That means, that is is possible to write JavaScript neural network code, which r
 
 \subsection{TensorFlow lite}
 
+To use models in mobile applications, there is the "TensorFlow Lite" library, which can be integrated in to existing native iOS and Android mobile applications.
+It is a C++ library, which comes with native API bindings for the respecting development environments.
+
+Models, that are created in the classic TensorFlow python environment have to be converted to a lightweight and flattened model, that can be shipped with the mobile application.
+
+Even complex models, that are used to classify images in 1000 categories are only 17 MB in size.
+
+The key requirement of a mobile application that uses machine learning is speed and battery performance.
+TensorFlow Lite is optimizing models by making a trade off between model complexity and size.
+The tools are helping developers to fine tune the model size, by allowing adjustments even while converting the model.
+
+A common image classification model's accuracy A is growing with file size D by a factor of $H=\sqrt{D}$.
+As a consequence, the models file size can be optimized at first, without compromising much performance.
+A model can also be optimized by avoiding over fitting and training with distinguished and useful data.
+However, these steps require adequate scientific approaches.
+
+\subsubsection{Usage example iOS}
+
+To use TensorFlow Lite models in an iOS applications, the C++ library has to be built from source and linked against.
+This is achieved by cloning the repository and running some shell scripts in the directory.
+A library is built, which is called "libtensorflow-lite.a".
+The iOS project now has to be configured with the correct library and header search paths.
+
+The API is a low level interface and some boilerplate code is needed to make a simple image recognition demonstration working.
+To classify an image, the model has to run against a pixel buffer \lstinline{CVPixelBufferRef} and the result will be written into a vector of class labels and their probability \lstinline{std::vector<std::pair<float, int>>}.
+This requires about 100 lines of objective C and C++ code.
+
+For a more simple API, Apple created CoreML, which is yet restricted to common use cases like image and text classification.
+It also supports TensorFlow lite models.
+
 \subsection{Limits}
 
 \section{PyPlot}
@@ -226,6 +256,20 @@ Accessed: 2019-01-12.
 \url{https://cloud.google.com/tpu/?hl=de}
 
 Accessed: 2019-01-12.
+
+
+\bibitem{node}TensorFlow Lite
+
+\url{https://www.tensorflow.org/lite/performance/best_practices}
+
+Accessed: 2019-01-15.
+
+
+\bibitem{node}Mobilenet\_v2 Model
+
+\url{https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md}
+
+Accessed: 2019-01-15.
 
 \end{thebibliography}
 
