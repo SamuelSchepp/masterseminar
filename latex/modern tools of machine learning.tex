@@ -135,20 +135,20 @@ fashion_mnist = keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 \end{lstlisting}
 
-The tuples contain TensorFlow-friendly data, that can directly be used in Keras, which is TensorFlow's high level API to configure and run neural networks.
+The tuples contain TensorFlow-friendly data, that can directly be used in Keras, which is TensorFlow`s high level API to configure and run neural networks.
 
 \section{TensorFlow}
 
 TensorFlow is a software platform for numerical computation, with focus on neural networks and deep learning.
 It is developed by Google's AI organization and provides frameworks for many scientific domains.
 
-It provides hardware accelaration for graphics cards and it own chips called "TensorFlow Processing Unit" (TPU).
+It provides hardware acceleration for graphics cards and it own chips called "TensorFlow Processing Unit" (TPU).
 
 Most of the time, the Python package is adequate to perform many basic and advanced machine learning tasks.
 
 \subsection{Keras}
 
-The Pyhton package of TensorFlow contains Keras, which is a high level interface to several deep learning back ends, like Theano, Microsoft Cognitive Toolkit and TensorFlow.
+The Phyton package of TensorFlow contains Keras, which is a high level interface to several deep learning back ends, like Theano, Microsoft Cognitive Toolkit and TensorFlow.
 
 It is the default API for TensorFlow, although it is a independent open source project.
 That means you will be able to run deep learning algorithms, that are developed for TensorFlow, on different frameworks.
@@ -185,12 +185,12 @@ To use the package, install it via NPM.
 npm install @tensorflow/tfjs-node
 \end{lstlisting}
 
-The package has access to all of the common hardware accelaration interface of the operating system, like NVIDIA CUDA, which allows models to train and run on a graphics card.
+The package has access to all of the common hardware acceleration interface of the operating system, like NVIDIA CUDA, which allows models to train and run on a graphics card.
 That means, that is is possible to write JavaScript neural network code, which runs with maximum performance.
 
 \subsection{TensorFlow lite}
 
-To use models in mobile applications, there is the "TensorFlow Lite" library, which can be integrated in to existing native iOS and Android mobile applications.
+To use models in mobile applications, there is the ''TensorFlow Lite'' library, which can be integrated in to existing native iOS and Android mobile applications.
 It is a C++ library, which comes with native API bindings for the respecting development environments.
 
 Models, that are created in the classic TensorFlow python environment have to be converted to a lightweight and flattened model, that can be shipped with the mobile application.
@@ -221,6 +221,29 @@ For a more simple API, Apple created CoreML, which is yet restricted to common u
 It also supports TensorFlow lite models.
 
 \subsection{Limits}
+
+Originally, TensorFlow was developed to create an open-source data flow oriented programming library.
+The goal was to enable symbolic math operations, lazy evaluation and hardware acceleration, which runs platform independent.
+
+A simple multiplication of two constants can be run with the following Python code.
+
+\begin{lstlisting}[caption={Multiplying twi constants in Tensorflow}, language=Python]
+sess = tf.Session()
+x = tf.constant(3, dtype=tf.int8)
+y = tf.constant(2, dtype=tf.int8)
+z = tf.multiply(x, y)
+sess.run(z)
+# 6
+\end{lstlisting}
+
+The operation are represented in a graph, which will be evaluated, when the session in ran.
+
+Neural networks are only a part of TensorFlow, which evolved to the most important aspect, since the maintainers are promoting almost exclusively the machine learning facets of TensorFlow.
+
+With this idea behind TensorFlow, it is important to known, what it is \textit{not} doing.
+It is not designed to support data scientist in collecting, managing, preprocessing and analyzing data and model results.
+It is not possible, to let TensorFlow make semantic inferences on the inputs or outputs.
+It only runs operations of maths and information science, which makes it low level on this point of view.
 
 \section{PyPlot}
 
