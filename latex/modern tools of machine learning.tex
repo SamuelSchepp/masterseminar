@@ -187,7 +187,7 @@ To use the package, install it via NPM.
 npm install @tensorflow/tfjs-node
 \end{lstlisting}
 
-The package has access to all of the common hardware acceleration interface of the operating system, like NVIDIA CUDA, which allows models to train and run on a graphics card.
+The package has access to all of the common hardware acceleration interfaces of the operating system, like NVIDIA CUDA, which allows models to train and run on a graphics card.
 That means, that is is possible to write JavaScript neural network code, which runs with maximum performance.
 
 \subsection{TensorFlow lite}
@@ -220,7 +220,7 @@ To classify an image, the model has to run against a pixel buffer \lstinline{CVP
 This requires about 100 lines of objective C and C++ code.
 
 For a more simple API, Apple created CoreML, which is yet restricted to common use cases like image and text classification.
-It also supports TensorFlow lite models.
+It supports TensorFlow lite models as base format.
 
 \subsection{Limits}
 
@@ -250,7 +250,7 @@ It only runs operations of maths and information science, which makes it low lev
 \section{PyPlot}
 
 To be able to work with data and analyze results, PyPlot offers a Python framework to visualize data directly in the IDE.
-It can be used in the Tensorflow-scripts and output images, graphs, tables and diagrams.
+It can be used in the TensorFlow-scripts and output images, graphs, tables and diagrams.
 The API is designed to use a MATLAB-like interface and enables a wide variety of customization options.
 
 Listing \ref{sinxplot} generates a plot of two arrays, which represent the sinus function, by plotting two arrays, that contain discrete example values.
@@ -262,7 +262,7 @@ Running the script in an supported IDE like Jetbrains PyCharm, enables interacti
 import numpy as np
 import matplotlib.pyplot as plt
 
-x = np.arange(0, 2 * np.pi, 0.5);
+x = np.arange(0, 2*np.pi, 0.5);
 y = np.sin(x)
 plt.plot(x, y)
 plt.show()
@@ -284,6 +284,47 @@ An examples can be found in section \ref{section:helloworld}, where there will t
 Figure \ref{zalandomnist} is generated using PyPlot.
 
 \section{Hardware Acceleration}
+
+When using Tensorflow's high-level APIs like Keras, most of the optimizations are already included.
+There are some ways, a developer can still improve performance.
+
+\subsection{CPU}
+When using CPU specific improvements like Intel MKL-DNN\footnote{Intel Math Kernel Library for Deep Neural Networks (Intel MKL-DNN)} or targeting special architectures like Xeon Phi, TensorFlow should be built from source, so that all of the supported instructions are available.
+
+Since different kind of neural networks require other optimizations, a general performance guide is not possible.
+For Example:
+When training CNN\footnote{Convolutional Neural Networks} based models, TensorFlow should be built with MKL, so that AVX\footnote{Advanced Vector Extensions} is available.
+That way, modern consumer processors from Intel are high-performing and can train CNN models up to 9 times faster\footnote{https://towardsdatascience.com/stop-installing-tensorflow-using-pip-for-performance-sake-5854f9d9eb0c}.
+There are many configuration options available, which can improve performance for special setups even further.
+
+\subsection{GPU}
+
+Using a GPU can also increase performance drastically.
+NVIDIA CUDA\footnote{Compute Unified Device Architecture} is a parallel computing platform and programming interface to abstract parallelism, which lets users run single threaded tasks on the CPU and multi-threaded task on the GPU.
+TensorFlow takes advantage of CUDA and optimizes training sessions to run multi-threaded.
+Other libraries like NumPy are also optimized , so that pre- or post-processing can be sped up too.
+In some situations, a consumer grade graphics card can be up to 15 times faster\footnote{https://medium.com/@andriylazorenko/tensorflow-performance-test-cpu-vs-gpu-79fcd39170c} than a consumer grade desktop processor.
+
+At the moment, CUDA is the only hardware platform, that is support officially in TensorFlow's GPU package.
+It is possible to use external GPUs via macOS's eGPU interface, which requires to disable macOS's System Integrity Protection.
+
+\subsection{Device selection}
+
+If enabled, TensorFlow will run all of it's computations on the GPU, otherwise it will fallback to the CPU.
+Running something on selected devices can be accomplished by using a `with` block.
+
+\begin{lstlisting}[caption={Running the instantiation on the CPU, the multiplication on the GPU.}, language=Python, label={tensorflow_gpu_selection}]
+with tf.device('/cpu:0'):
+  a = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[2, 3], name='a')
+  b = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[3, 2], name='b')
+c = tf.matmul(a, b)
+\end{lstlisting}
+
+In listing \ref{tensorflow_gpu_selection}, the allocation and configuration of the matrix and assignment to $a$ and $b$ are done on the CPU.
+In Python, the `with` keyword provides an object to a block.
+it is used here to define the device for the statements.
+
+The actual matrix multiplication is done on the GPU, because it is the default device.
 
 \section{Hello World}
 \label{section:helloworld}
@@ -330,6 +371,27 @@ Accessed: 2019-01-15.
 \url{https://github.com/tensorflow/models/blob/master/research/slim/nets/mobilenet_v1.md}
 
 Accessed: 2019-01-15.
+
+
+\bibitem{node}TensorFlow performance test: CPU VS GPU
+
+\url{https://medium.com/@andriylazorenko/tensorflow-performance-test-cpu-vs-gpu-79fcd39170c}
+
+Accessed: 2019-03-06.
+
+
+\bibitem{node}Stop Installing Tensorflow using pip for performance sake!
+
+\url{https://towardsdatascience.com/stop-installing-tensorflow-using-pip-for-performance-sake-5854f9d9eb0c}
+
+Accessed: 2019-03-06.
+
+
+\bibitem{node}Training Your Neural Net with eGPU Acceleration on Mac with Tensorflow 1.5
+
+\url{https://medium.com/@jianshi_94445/training-your-neural-net-with-egpu-acceleration-on-mac-with-tensorflow-1-5-b2b729f4e408}
+
+Accessed: 2019-03-06.
 
 \end{thebibliography}
 
