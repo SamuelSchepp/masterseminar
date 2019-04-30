@@ -203,9 +203,9 @@ The key requirement of a mobile application that uses machine learning is speed 
 TensorFlow Lite is optimizing models by making a trade off between model complexity and size.
 The tools are helping developers to fine tune the model size, by allowing adjustments even while converting the model.
 
-A common image classification model's accuracy A is growing with file size D by a factor of $H=\sqrt{D}$.
+A common image classification model's accuracy A is growing with file size D by a factor of $H\approx\sqrt{D}$.
 As a consequence, the models file size can be optimized at first, without compromising much performance.
-A model can also be optimized by avoiding over fitting and training with distinguished and useful data.
+A model can also be optimized by avoiding over fitting and training with distinguished and good data.
 However, these steps require adequate scientific approaches.
 
 \subsubsection{Usage example iOS}
@@ -329,6 +329,16 @@ The actual matrix multiplication is done on the GPU, because it is the default d
 \section{Hello World}
 \label{section:helloworld}
 
+Now, a simple example application can combine all of the previously described tools.
+This example will use tensorflow to train classification of images from the Zalando fashion MNIST.
+See Figure \ref{zalandomnist} for a demo snippet of the data set.
+
+To get started, a modern Python development environment has to be set up.
+Using pip, the tensorflow Python package can be installed, which contains many libraries that will handle most of the common machine learning tasks.
+
+\begin{lstlisting}[caption={Install TesorFlow Python packages}, language=bash]
+pip install tensorflow
+\end{lstlisting}
 
 \begin{thebibliography}{1}
 
