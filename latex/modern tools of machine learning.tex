@@ -74,6 +74,7 @@ In addition, there will be shown, how to run trainings on a graphics card and wh
 \end{abstract}
 
 \section{MNIST Datasets}
+\label{sec:mnistdataset}
 
 To get started with machine learning, there needs to be data that a model can read and produces a result of.
 In addition, a model needs much more data to train.
@@ -340,6 +341,137 @@ Using pip, the tensorflow Python package can be installed, which contains many l
 pip install tensorflow
 \end{lstlisting}
 
+Next, a single Python file is needed to setup a simple neural network.
+The next section will cover all of the important code snippets, that are needed to implement the an example application of a model.
+The neural network will classify images of clothes as describe in section \ref{sec:mnistdataset}.
+
+First of all, the recently installed python libraries have to be imported into the source file.
+This is done by standard python import statements in listing \ref{exampleimports}.
+
+\begin{lstlisting}[caption={Importing TensorFlow and it's base network API Keras.}, language=Python, label={exampleimports}]
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+\end{lstlisting}
+
+Now the MNIST data can be setup by using a handy Keras interface to load the pre-bundled fashion mnist.
+
+\begin{lstlisting}[caption={Setup of the training and test datasets.}, language=Python, label={exampledataset}]
+(train_images, train_labels), (test_images, test_labels) = keras.datasets.fashion_mnist.load_data()
+class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+               'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+
+train_images = train_images / 255.0
+test_images = test_images / 255.0
+\end{lstlisting}
+
+The statement \textit{keras.datasets.fashion\_mnist.load\_data()} returns a tuple of training data and test data, of which each is a tuple of input and output.
+The since the images are grayscale images with a color value from 0 to 255, all values are divided by 255, to normalize the value scale to 0 to 1.
+This is needed to make sure that the values can be correctly be used inside the neural network.
+It is required, that a full value is 1, because if it is multiplied by 1, it must still yield the value 1.
+
+Now it is time to setup the model.
+The model, that is setup in listing \ref{examplemodelsetup} has 784 input nodes, 60 middle layer nodes and 10 output nodes.
+
+\begin{lstlisting}[caption={Setup of the model.}, language=Python, label={examplemodelsetup}]
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(28, 28)),
+    keras.layers.Dense(60, activation=tf.nn.relu),
+    keras.layers.Dense(10, activation=tf.nn.softmax)
+])
+model.compile(optimizer=tf.train.AdamOptimizer(),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+\end{lstlisting}
+
+Because the images have a size of 28 by 28 pixels, there are 784 in total.
+The model is a fully connected neural network, where every node of one layer is connected to every node of the following layers.
+There are three layers in total.
+
+\textit{keras.layers.Dense} declares, that the nodes are fully connected to their parents.
+
+The network is configured to use the Adam algorithm for optimization.
+It's is a different way of updating the network weights.
+
+\textit{tf.nn.relu} represents the Rectified Linear Unit activation function.
+An activation function is applied to the outputs of a node.
+The relu function will return 0 if the input was negative.
+Otherwise, it returns the input.
+It is used to secure the neural network from unwanted values.
+
+\textit{tf.nn.softmax} makes sure, that all output values will be scaled to a values between 0 and 1.
+It is needed to make sure, that the outputs are valid probability values.
+
+A loss function determines, how far the result value deviate from the correct value.
+
+The next task is to let the model trains it's weights.
+To do so, the model can be executed.
+Since the data already is in the correct format, a simple call will train the model.
+
+\begin{lstlisting}[caption={Training the model by using the train value pairs.}, language=Python, label={exampletrain}]
+model.fit(train_images, train_labels, epochs=10)
+\end{lstlisting}
+
+Listing \ref{exampletrain} trains the model 10 times, by using all the images of the train set.
+The model can now be exported as a TensorFlow light model, to be used in mobile applications or on the server.
+But the interesting part is the testing, using the provided test pair.
+
+To perform a model test, the code of listing \ref{exampletest} can be used.
+
+\begin{lstlisting}[caption={Testing the model by using the given test set.}, language=Python, label={exampletest}]
+predictions = model.predict(test_images)
+\end{lstlisting}
+
+The variable predictions now contains an array of ten tuple of numbers.
+The numbers of the ten tuple represent the probabilities of all the 10 classes (T-shirt, pullover, dress, ...).
+That means, for every item, a probability map is returned.
+
+\subsection{Evaluation}
+
+Now, the results have to be evaluated.
+To count the success and failure rate, a simple algorithm needs to iterate over all result tuples and compare the class with the highest prediction values with the given solution set.
+This can be done by using the code example of listing \ref{exampleakku}.
+
+\begin{lstlisting}[caption={Akkumulate succes and failure count.}, language=Python, label={exampleakku}]
+missed = 0
+success = 0
+for i in range(predictions.shape[0]):
+    predicted_label = np.argmax(predictions[i])
+    true_label = test_labels[i]
+    if predicted_label != true_label:
+        missed += 1
+    else:
+        success += 1
+\end{lstlisting}
+
+\textit{np.argmax} returns the index of the highest value in an array.
+This index directly represents the class label.
+This is compared to the given correct label.
+If they match, the success variable is incremented.
+Otherwise, the missed variable is incremented. 
+
+\begin{figure}[h]
+\label{predictiontuple}
+\caption{Graph, representing the prediction tuple of one test example.}
+\centering
+\includegraphics[width=0.5\textwidth]{img/resulttuple.png}
+\end{figure}
+
+Figure \ref{predictiontuple} represents an example prediction tuple, which is directly extracted from the ten output nodes of the neural network.
+
+\subsection{Performance}
+
+\begin{figure}[h]
+\label{performanceoverview}
+\caption{Performance and accuracy overview of changing epochs and middle layer node counts.}
+\centering
+\includegraphics[width=0.5\textwidth]{img/performanceoverview.png}
+\end{figure}
+
+\section{Conclusion}
+
+
+
 \begin{thebibliography}{1}
 
 \bibitem{node}Fashion-MNIST
@@ -402,6 +534,12 @@ Accessed: 2019-03-06.
 \url{https://medium.com/@jianshi_94445/training-your-neural-net-with-egpu-acceleration-on-mac-with-tensorflow-1-5-b2b729f4e408}
 
 Accessed: 2019-03-06.
+
+\bibitem{node}5 Trends Emerge in the Gartner Hype Cycle for Emerging Technologies, 2018
+
+\url{https://www.gartner.com/smarterwithgartner/5-trends-emerge-in-gartner-hype-cycle-for-emerging-technologies-2018/}
+
+Accessed: 2019-05-18.
 
 \end{thebibliography}
 

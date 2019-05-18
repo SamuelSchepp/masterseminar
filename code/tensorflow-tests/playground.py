@@ -13,18 +13,16 @@ sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
 print(sess.run(c))
 
 print("---- Setup Data ----")
-fashion_mnist = keras.datasets.fashion_mnist
-(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+(train_images, train_labels), (test_images, test_labels) = keras.datasets.fashion_mnist.load_data()
 class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
-
 
 train_images = train_images / 255.0
 test_images = test_images / 255.0
 
 print("---- Setup Layers ----")
 EPOCHS = 1
-NODES = 128
+NODES = 20
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),
@@ -60,12 +58,13 @@ for i in range(predictions.shape[0]):
     else:
         success += 1
 
+print("Loss: {}".format(test_loss))
 print("Missed: {}".format(missed))
 print("Success: {}".format(success))
 print("Accuracy: {:.3} %".format((1.0 - float(missed) / float(success)) * 100.0))
 print("Epochs: {}".format(EPOCHS))
 print("Nodes (middle layer): {}".format(NODES))
-print("Time: {:.2} seconds".format(endTime - startTime))
+print("Time: {:.3f} seconds".format(endTime - startTime))
 
 
 
