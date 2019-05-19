@@ -123,8 +123,8 @@ It is not a coincidence, that the count of classes here is the same as the origi
 A system, that can train the handwriting, can also train and recognize the clothing, without any reimplementation.
 
 \begin{figure}[h]
-\label{zalandomnist}
 \caption{Snippet of the Zalando fashion MNIST.}
+\label{zalandomnist}
 \centering
 \includegraphics[width=0.5\textwidth]{img/mnist_fashion.png}
 \end{figure}
@@ -270,8 +270,8 @@ plt.show()
 \end{lstlisting}
 
 \begin{figure}[h]
-\label{pyplotscreenshot}
 \caption{Screenshot of Jetbrains PyCharm displaying a PyPlot chart with discrete values.}
+\label{pyplotscreenshot}
 \centering
 \includegraphics[width=0.5\textwidth]{img/pyplot.png}
 \end{figure}
@@ -299,6 +299,7 @@ That way, modern consumer processors from Intel are high-performing and can trai
 There are many configuration options available, which can improve performance for special setups even further.
 
 \subsection{GPU}
+\label{gpusupport}
 
 Using a GPU can also increase performance drastically.
 NVIDIA CUDA\footnote{Compute Unified Device Architecture} is a parallel computing platform and programming interface to abstract parallelism, which lets users run single threaded tasks on the CPU and multi-threaded task on the GPU.
@@ -451,8 +452,8 @@ If they match, the success variable is incremented.
 Otherwise, the missed variable is incremented. 
 
 \begin{figure}[h]
-\label{predictiontuple}
 \caption{Graph, representing the prediction tuple of one test example.}
+\label{predictiontuple}
 \centering
 \includegraphics[width=0.5\textwidth]{img/resulttuple.png}
 \end{figure}
@@ -461,12 +462,72 @@ Figure \ref{predictiontuple} represents an example prediction tuple, which is di
 
 \subsection{Performance}
 
+There are many ways to optimize a model, into being more accurate or faster in training times.
+The two first parameters that can be changed are the epoch count and the node count of the middle layer.
+An epoch is defined as \textit{one pass over the entire dataset}\footnote{\url{https://keras.io/getting-started/faq/\#what-does-sample-batch-epoch-mean}}.
+
+Because of a neural networks nature, an increase of the epoch count does not necessarily result in an increase of accuracy.
+This is related to over fitting, which lets a model that has been trained with to many epochs my only classify it's training data correctly.
+It is important to find a good fit of epochs and node counts.
+This can be achieved primarily with good training data an \textit{trial and error}.
+
+Figure \ref{performanceoverview} displays the impact of changing the epoch and nodes count to the accuracy and the training time.
+
 \begin{figure}[h]
+\caption{Training time and test accuracy overview.}
 \label{performanceoverview}
-\caption{Performance and accuracy overview of changing epochs and middle layer node counts.}
 \centering
 \includegraphics[width=0.5\textwidth]{img/performanceoverview.png}
 \end{figure}
+
+Generally, higher node and epoch count does result in a higher accuracy, even though the coherence has some exceptions.
+Those exceptions are results, that are worse, even though the parameters are higher.
+This can be related to the low amount of training or test data, which causes some random tests to fail, which has a big impact on values.
+
+The best combination on this experiment were 500 nodes and 20 epochs, which resulted in an accuracy of 88,3\% and a training duration of 45,891 seconds.
+The worst combination is the one with 5000 nodes and an epoch count of 100.
+This run resulted in an high accuracy of 87,8\%, but has an unsatisfying training time of 40 minutes.
+
+The epoch count generally increases the training time by a linear factor, while the node count's impact cannot be determined, because of parallel optimization mechanisms.
+But high node count starting from 500 start to be a linear factor as well.
+
+The tests were run on an iMac, running on macOS 10.14.5 on a 4.2 GHz Intel Core i7.
+
+\subsection{Hardware Acceleration}
+
+GPU acceleration as described in section \ref{gpusupport} is supported on Linux and Windows.
+This section's example are run on a WIndows computer that is equipped with an 3.6 GHz Intel Core i7-9700K CPU and an NVIDIA GeForce RTX 2080 graphics card.
+This card is optimized for computer games, but also has CUDA cores, used for deep learning acceleration.
+Running the same example, that is described in the previous section on a GPU, the training performance was doubled.
+See figure \ref{gpuperformanceoverview1} and \ref{gpuperformanceoverview2} for a comparison.
+
+\begin{figure}[h]
+\caption{GPU and CPU performance using 500 nodes and 20 epochs.}
+\label{gpuperformanceoverview1}
+\begin{tabular}{lllll}
+\multicolumn{1}{l|}{}              & Test Accuracy & Training Times &  &  \\ \cline{1-3}
+\multicolumn{1}{l|}{CPU}          & 87.3 \%       & 107 seconds    &  &  \\
+\multicolumn{1}{l|}{GPU} & 88.1 \%       & 49.25 seconds  &  &  \\
+                                   &               &                &  & 
+\end{tabular}
+\end{figure}\begin{figure}[h]
+
+\caption{GPU and CPU performance using 5000 nodes and 50 epochs.}
+\label{gpuperformanceoverview2}
+\begin{tabular}{lllll}
+\multicolumn{1}{l|}{}              & Test Accuracy & Training Times &  &  \\ \cline{1-3}
+\multicolumn{1}{l|}{CPU}          & 88.2 \%       & 1341 seconds    &  &  \\
+\multicolumn{1}{l|}{GPU} & 87.5 \%       & 171 seconds  &  &  \\
+                                   &               &                &  & 
+\end{tabular}
+\end{figure}
+
+Figure \ref{gpuperformanceoverview1} indicates an performance improvement of 54 \% and figure \ref{gpuperformanceoverview2} suggests an improvement of 87 \%.
+Further test scenarios show, that especially high node counts benefit of graphics card support, while the epoch count still has an linear impact on the training times.
+
+It is clear, that the dedicated hardware support and acceleration described in \ref{gpusupport} are working as expected.
+However, the graphics card on the windows machine was slower then the CPU in the Mac that was used in figure \ref{performanceoverview}.
+This behavior may be due to the different host platforms which may use different optimization methods.
 
 \section{Conclusion}
 
