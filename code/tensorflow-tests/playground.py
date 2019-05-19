@@ -9,7 +9,9 @@ print(tf.__version__)
 a = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[2, 3], name='a')
 b = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[3, 2], name='b')
 c = tf.matmul(a, b)
-sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
+config = tf.ConfigProto(log_device_placement=True)
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
 print(sess.run(c))
 
 print("---- Setup Data ----")
@@ -22,7 +24,7 @@ test_images = test_images / 255.0
 
 print("---- Setup Layers ----")
 EPOCHS = 1
-NODES = 20
+NODES = 5000
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),
@@ -38,7 +40,9 @@ model.compile(optimizer=tf.train.AdamOptimizer(),
 
 print("---- Training ----")
 startTime = time.time()
-model.fit(train_images, train_labels, epochs=EPOCHS)
+#with tf.device("/device:GPU:0"):
+with tf.device("/cpu"):
+    model.fit(train_images, train_labels, epochs=EPOCHS)
 endTime = time.time()
 
 print("---- Testing ----")
