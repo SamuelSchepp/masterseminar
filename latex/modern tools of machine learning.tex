@@ -51,7 +51,7 @@
 	 frame=ltbr,
 }
 
-\title{Modern Tools in Machine Learning.}
+\title{Modern Tools of Deep Learning.}
 
 \author{Samuel Schepp \\
   Technische Hochschule Mittelhessen \\
@@ -65,11 +65,11 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-This paper introduces common machine learning tools like TensorFlow, PyCharm, and PyPlot, which are used to setup and run machine learning tasks with neural networks.
+This paper introduces common machine learning tools like TensorFlow, PyCharm and PyPlot, which are used to setup and run machine learning tasks with neural networks.
 A common "Hello World" script will be developed to show the concept and ideas of these tools.
 It will make use of the "Fashion MNIST dataset" by Zalando, which will be explored in detail.
 
-In addition, there will be shown, how to run trainings on a graphics card and what TensorFlow is not doing.
+In addition, there will be shown how to run trainings on a graphics card and what TensorFlow is not doing.
 
 \end{abstract}
 
@@ -78,27 +78,27 @@ In addition, there will be shown, how to run trainings on a graphics card and wh
 
 To get started with machine learning, there needs to be data that a model can read and produces a result of.
 In addition, a model needs much more data to train.
-In the "Hello World" example, which will be developed later, there will be used the "Fashion MNIST dataset", which is created by Zalando, an online fashion store.
-Zalando is developing solution, which can detect and classify pictures of cloth.
-Their current focus is machine learning.
+In the "Hello World" example, which will be developed later, the "Fashion MNIST dataset" will be used, which is created by Zalando, an online fashion store.
+Zalando is developing solutions, which can detect and classify pictures of cloths.
+Their current focus is deep learning using TensorFlow.
 
 A MNIST dataset contains four individual sets.
 The first set is a list of images, which will be used to train on.
 The second set is a list of class names, that refers to the actual thing, that is shown on the image at the same index.
 That means, that image 4 might show a jacket, the class name on set 2, index 4 says "jacket".
-These two datasets can now be used to train a model, which should recognize the image.
+These two datasets can now be used to train a model, which then should be able to  recognize the image.
 
-The remaining two datasets are again pictures and class names of cloth.
+The remaining two datasets are again pictures and class names of cloths.
 These are used to test the model.
-The images are new and different ones, to make sure, the model is not over fitting.
-Over fitting means, that the model is only capable of recognizing the given dataset, but is likely to fail on unknown and new pictures.
+The images are new and different ones, to make sure, the model is not over-fitting.
+Over-fitting means, that the model is only capable of recognizing the given dataset, but is likely to fail on unknown and new pictures.
 
 \subsection{Origin}
 
 The acronym "MNIST" database stands for "Modified National Institute of Standards and Technology database".
 It is a large database of handwritten digits, that is used to train neural networks and image processing systems.
-There are 60,000 training and 10,000 testing images, which are normalized, centered and 28 by 28 pixel in size.
-It is easy for convolutional neural networks, to classify these images at a failure rate of under 1 percent.
+There are 60,000 training and 10,000 testing images, which are normalized, centered and scaled to 28 by 28 pixel in size.
+It is easy for convolutional neural networks, to classify these images at a failure rate of under 1 percent\footnote{Source: \url{http://yann.lecun.com/exdb/mnist/}}.
 
 The images are encoded in a simple byte-array based format, so no conventional image application can open them.
 TensorFlow is able to decode the images and use them as input, since it became a common format.
@@ -113,7 +113,7 @@ TensorFlow is able to decode the images and use them as input, since it became a
 \subsection{Examples}
 
 Since the MNIST database is popular amongst machine learning scientists, it became a standard format for other content.
-Zalando uses it, to provide example data to the public and try out different learning systems.
+Zalando uses it, to provide example data to the public and tries out different learning systems.
 
 They created a database which contains clothing and its names (class).
 Figure \ref{zalandomnist} shows an extract of the dataset.
@@ -145,7 +145,7 @@ The tuples contain TensorFlow-friendly data, that can directly be used in Keras,
 TensorFlow is a software platform for numerical computation, with focus on neural networks and deep learning.
 It is developed by Google's AI organization and provides frameworks for many scientific domains.
 
-It provides hardware acceleration for graphics cards and it own chips called "TensorFlow Processing Unit" (TPU).
+It provides hardware acceleration for graphics cards and its own chips called "TensorFlow Processing Unit" (TPU).
 
 Most of the time, the Python package is adequate to perform many basic and advanced machine learning tasks.
 
@@ -153,7 +153,7 @@ Most of the time, the Python package is adequate to perform many basic and advan
 
 The Phyton package of TensorFlow contains Keras, which is a high level interface to several deep learning back ends, like Theano, Microsoft Cognitive Toolkit and TensorFlow.
 
-It is the default API for TensorFlow, although it is a independent open source project.
+It is the default API for TensorFlow, although it is an independent open source project.
 That means you will be able to run deep learning algorithms, that are developed for TensorFlow, on different frameworks.
 
 \subsection{TensorFlow.js}
@@ -204,7 +204,7 @@ The key requirement of a mobile application that uses machine learning is speed 
 TensorFlow Lite is optimizing models by making a trade off between model complexity and size.
 The tools are helping developers to fine tune the model size, by allowing adjustments even while converting the model.
 
-A common image classification model's accuracy A is growing with file size D by a factor of $H\approx\sqrt{D}$.
+A common image classification model's accuracy $H$ is growing with file size $D$ by a factor of $H\approx\sqrt{D}$.
 As a consequence, the models file size can be optimized at first, without compromising much performance.
 A model can also be optimized by avoiding over fitting and training with distinguished and good data.
 However, these steps require adequate scientific approaches.
@@ -251,12 +251,12 @@ It only runs operations of maths and information science, which makes it low lev
 \section{PyPlot}
 
 To be able to work with data and analyze results, PyPlot offers a Python framework to visualize data directly in the IDE.
-It can be used in the TensorFlow-scripts and output images, graphs, tables and diagrams.
+It can be used in the TensorFlow-scripts to output images, graphs, tables and diagrams.
 The API is designed to use a MATLAB-like interface and enables a wide variety of customization options.
 
 Listing \ref{sinxplot} generates a plot of two arrays, which represent the sinus function, by plotting two arrays, that contain discrete example values.
 Variable $x$ is an array that is generated by creating values from $0$ to $2\pi$ with an interval of $0.5$, which results in $13$ values.
-$y$ is the result of mapping $y$ using the sinus function.
+$y$ is the result of mapping $x$ using the sinus function.
 Running the script in an supported IDE like Jetbrains PyCharm, enables interactive display of the generated plots by calling plt.show().
 
 \begin{lstlisting}[caption={Generating a plot of sin(x) with some discrete values.)}, language=Python, label=sinxplot]
@@ -282,7 +282,7 @@ The window SciView displays all the plots, that are generated while the code is 
 This helps to understand machine learning algorithms, since it can show input and output data.
 Image recognition algorithms can output the image first, then the processed one and then the result after the session finished.
 An examples can be found in section \ref{section:helloworld}, where there will the results be analyzed using PyPlot.
-Figure \ref{zalandomnist} is generated using PyPlot.
+Figure \ref{zalandomnist} is also generated using PyPlot.
 
 \section{Hardware Acceleration}
 
@@ -292,7 +292,7 @@ There are some ways, a developer can still improve performance.
 \subsection{CPU}
 When using CPU specific improvements like Intel MKL-DNN\footnote{Intel Math Kernel Library for Deep Neural Networks (Intel MKL-DNN)} or targeting special architectures like Xeon Phi, TensorFlow should be built from source, so that all of the supported instructions are available.
 
-Since different kind of neural networks require other optimizations, a general performance guide is not possible.
+Since different kinds of neural networks require other optimizations, a general performance guide is not possible.
 For Example:
 When training CNN\footnote{Convolutional Neural Networks} based models, TensorFlow should be built with MKL, so that AVX\footnote{Advanced Vector Extensions} is available.
 That way, modern consumer processors from Intel are high-performing and can train CNN models up to 9 times faster\footnote{https://towardsdatascience.com/stop-installing-tensorflow-using-pip-for-performance-sake-5854f9d9eb0c}.
@@ -307,8 +307,8 @@ TensorFlow takes advantage of CUDA and optimizes training sessions to run multi-
 Other libraries like NumPy are also optimized , so that pre- or post-processing can be sped up too.
 In some situations, a consumer grade graphics card can be up to 15 times faster\footnote{https://medium.com/@andriylazorenko/tensorflow-performance-test-cpu-vs-gpu-79fcd39170c} than a consumer grade desktop processor.
 
-At the moment, CUDA is the only hardware platform, that is support officially in TensorFlow's GPU package.
-It is possible to use external GPUs via macOS's eGPU interface, which requires to disable macOS's System Integrity Protection.
+At the moment, CUDA is the only hardware platform, that is supported officially in TensorFlow's GPU package.
+It is possible to use external GPUs via macOS's eGPU interface.
 
 \subsection{Device selection}
 
@@ -324,30 +324,30 @@ c = tf.matmul(a, b)
 
 In listing \ref{tensorflow_gpu_selection}, the allocation and configuration of the matrix and assignment to $a$ and $b$ are done on the CPU.
 In Python, the `with` keyword provides an object to a block.
-it is used here to define the device for the statements.
+It is used here to define the device for the statements.
 
-The actual matrix multiplication is done on the GPU, because it is the default device.
+The actual matrix multiplication is done on the GPU, because the statement is outside the 'with' block and the GPU it is the default device.
 
 \section{Hello World}
 \label{section:helloworld}
 
 Now, a simple example application can combine all of the previously described tools.
-This example will use tensorflow to train classification of images from the Zalando fashion MNIST.
+This example will use TensorFlow to train classification of images from the Zalando fashion MNIST.
 See Figure \ref{zalandomnist} for a demo snippet of the data set.
 
 To get started, a modern Python development environment has to be set up.
-Using pip, the tensorflow Python package can be installed, which contains many libraries that will handle most of the common machine learning tasks.
+Using pip, the TensorFlow Python package can be installed, which contains many libraries that will handle most of the common machine learning tasks.
 
 \begin{lstlisting}[caption={Install TesorFlow Python packages}, language=bash]
 pip install tensorflow
 \end{lstlisting}
 
 Next, a single Python file is needed to setup a simple neural network.
-The next section will cover all of the important code snippets, that are needed to implement the an example application of a model.
-The neural network will classify images of clothes as describe in section \ref{sec:mnistdataset}.
+The next section will cover all of the important code snippets, that are needed to implement an example application of a neural model.
+The neural network will classify images of clothes as described in section \ref{sec:mnistdataset}.
 
-First of all, the recently installed python libraries have to be imported into the source file.
-This is done by standard python import statements in listing \ref{exampleimports}.
+First of all, the recently installed Python libraries have to be imported into the source file.
+This is done by a standard import statements in listing \ref{exampleimports}.
 
 \begin{lstlisting}[caption={Importing TensorFlow and it's base network API Keras.}, language=Python, label={exampleimports}]
 import tensorflow as tf
@@ -355,7 +355,7 @@ from tensorflow import keras
 import numpy as np
 \end{lstlisting}
 
-Now the MNIST data can be setup by using a handy Keras interface to load the pre-bundled fashion mnist.
+Now the MNIST data can be set up by using a handy Keras interface to load the pre-bundled fashion mnist.
 
 \begin{lstlisting}[caption={Setup of the training and test datasets.}, language=Python, label={exampledataset}]
 (train_images, train_labels), (test_images, test_labels) = keras.datasets.fashion_mnist.load_data()
@@ -367,8 +367,8 @@ test_images = test_images / 255.0
 \end{lstlisting}
 
 The statement \textit{keras.datasets.fashion\_mnist.load\_data()} returns a tuple of training data and test data, of which each is a tuple of input and output.
-The since the images are grayscale images with a color value from 0 to 255, all values are divided by 255, to normalize the value scale to 0 to 1.
-This is needed to make sure that the values can be correctly be used inside the neural network.
+Since the images are grayscale images with a color value from 0 to 255, all values are divided by 255, to normalize the value scale to 0 to 1.
+This is needed to make sure that the values can correctly be used inside the neural network.
 It is required, that a full value is 1, because if it is multiplied by 1, it must still yield the value 1.
 
 Now it is time to setup the model.
@@ -392,7 +392,8 @@ There are three layers in total.
 \textit{keras.layers.Dense} declares, that the nodes are fully connected to their parents.
 
 The network is configured to use the Adam algorithm for optimization.
-It's is a different way of updating the network weights.
+It is a common algorithm, that is used a lot in deep learning and defines a specific way of updating the network weights while training.
+The network weights are the core elements of decision making.
 
 \textit{tf.nn.relu} represents the Rectified Linear Unit activation function.
 An activation function is applied to the outputs of a node.
@@ -400,13 +401,13 @@ The relu function will return 0 if the input was negative.
 Otherwise, it returns the input.
 It is used to secure the neural network from unwanted values.
 
-\textit{tf.nn.softmax} makes sure, that all output values will be scaled to a values between 0 and 1.
+\textit{tf.nn.softmax} makes sure, that all output values will be scaled to values between 0 and 1.
 It is needed to make sure, that the outputs are valid probability values.
 
-A loss function determines, how far the result value deviate from the correct value.
+A loss function determines, how far the result value deviates from the correct value.
 
-The next task is to let the model trains it's weights.
-To do so, the model can be executed.
+The next task is to let the model train it's weights.
+To do so, a fit task can be run on the model.
 Since the data already is in the correct format, a simple call will train the model.
 
 \begin{lstlisting}[caption={Training the model by using the train value pairs.}, language=Python, label={exampletrain}]
@@ -423,14 +424,14 @@ To perform a model test, the code of listing \ref{exampletest} can be used.
 predictions = model.predict(test_images)
 \end{lstlisting}
 
-The variable predictions now contains an array of ten tuple of numbers.
+The variable predictions now contains an array of ten tuples of numbers.
 The numbers of the ten tuple represent the probabilities of all the 10 classes (T-shirt, pullover, dress, ...).
 That means, for every item, a probability map is returned.
 
 \subsection{Evaluation}
 
 Now, the results have to be evaluated.
-To count the success and failure rate, a simple algorithm needs to iterate over all result tuples and compare the class with the highest prediction values with the given solution set.
+To count the success and failure rate, a simple algorithm needs to iterate over all result tuples and compare the class with the highest prediction value with the given correct index.
 This can be done by using the code example of listing \ref{exampleakku}.
 
 \begin{lstlisting}[caption={Akkumulate succes and failure count.}, language=Python, label={exampleakku}]
@@ -447,7 +448,7 @@ for i in range(predictions.shape[0]):
 
 \textit{np.argmax} returns the index of the highest value in an array.
 This index directly represents the class label.
-This is compared to the given correct label.
+The label is then compared to the given reference label.
 If they match, the success variable is incremented.
 Otherwise, the missed variable is incremented. 
 
@@ -469,7 +470,7 @@ An epoch is defined as \textit{one pass over the entire dataset}\footnote{\url{h
 Because of a neural networks nature, an increase of the epoch count does not necessarily result in an increase of accuracy.
 This is related to over fitting, which lets a model that has been trained with to many epochs my only classify it's training data correctly.
 It is important to find a good fit of epochs and node counts.
-This can be achieved primarily with good training data an \textit{trial and error}.
+This can be achieved primarily with high quality training data and \textit{trial and error}.
 
 Figure \ref{performanceoverview} displays the impact of changing the epoch and nodes count to the accuracy and the training time.
 
@@ -489,16 +490,16 @@ The worst combination is the one with 5000 nodes and an epoch count of 100.
 This run resulted in an high accuracy of 87,8\%, but has an unsatisfying training time of 40 minutes.
 
 The epoch count generally increases the training time by a linear factor, while the node count's impact cannot be determined, because of parallel optimization mechanisms.
-But high node count starting from 500 start to be a linear factor as well.
+But high node counts (starting from 500) begin to be a linear factor as well.
 
 The tests were run on an iMac, running on macOS 10.14.5 on a 4.2 GHz Intel Core i7.
 
 \subsection{Hardware Acceleration}
 
-GPU acceleration as described in section \ref{gpusupport} is supported on Linux and Windows.
-This section's example are run on a WIndows computer that is equipped with an 3.6 GHz Intel Core i7-9700K CPU and an NVIDIA GeForce RTX 2080 graphics card.
+GPU acceleration as described in section \ref{gpusupport} is supported on Windows, while other platform support is provided by community projects as experiments.
+This section's examples are run on a Windows computer that is equipped with an 3.6 GHz Intel Core i7-9700K CPU and an NVIDIA GeForce RTX 2080 graphics card.
 This card is optimized for computer games, but also has CUDA cores, used for deep learning acceleration.
-Running the same example, that is described in the previous section on a GPU, the training performance was doubled.
+Running the same example, that is described in the previous section on a GPU, the training performance is two times higher, compared to the CPU on the same system.
 See figure \ref{gpuperformanceoverview1} and \ref{gpuperformanceoverview2} for a comparison.
 
 \begin{figure}[h]
@@ -522,14 +523,34 @@ See figure \ref{gpuperformanceoverview1} and \ref{gpuperformanceoverview2} for a
 \end{tabular}
 \end{figure}
 
-Figure \ref{gpuperformanceoverview1} indicates an performance improvement of 54 \% and figure \ref{gpuperformanceoverview2} suggests an improvement of 87 \%.
-Further test scenarios show, that especially high node counts benefit of graphics card support, while the epoch count still has an linear impact on the training times.
+Figure \ref{gpuperformanceoverview1} indicates an performance improvement of 54 \% and figure \ref{gpuperformanceoverview2} an improvement of 87 \%.
+Further test scenarios show, that especially high node counts benefit from graphics card support, while the epoch count still has an linear impact on the training times.
 
 It is clear, that the dedicated hardware support and acceleration described in \ref{gpusupport} are working as expected.
 However, the graphics card on the windows machine was slower then the CPU in the Mac that was used in figure \ref{performanceoverview}.
 This behavior may be due to the different host platforms which may use different optimization methods.
 
 \section{Conclusion}
+
+Deep learning has long since arrived in the broad development masses and can be utilized by everyone in common development environments.
+An easy setup process and a lot of resources that are supported and created by big players like Google, Amazon, Facebook and Microsoft ensure that neural network approaches can be tried out quickly.
+The TensorFlow platform is by far the most relevant development tool and can be integrated into many systems like client/server application of even mobile and web apps.
+
+While the first getting started projects are easy and fun to play around with, more advanced topics and use-cases require comprehensive knowledge of mathematics and statistics.
+TensorFlow hardware acceleration is only supported on one hardware platform (CUDA), which uses proprietary hardware and driver components.
+Decisions or results of neural networks are unpredictable and it is not clear, how characteristics of the input influence the outcome.
+This makes it hard to prove the correctness of a model, because new input always results in an wayward result.
+
+There is an inconsistency that occurred while evaluating the test result that are displayed in figure \ref{performanceoverview}, \ref{gpuperformanceoverview1} and \ref{gpuperformanceoverview2}.
+The results suggest, that the run using 500 nodes and 20 epochs has been faster on a 4,2 GHz Intel quad core processor than on an Nvidia Gforce RTX 2080 graphics card using CUDA.
+The system that was used for running the neural network on a processor was an Apple iMac from 2017, running macOS.
+The run on the graphics card was performed on a 2018 Windows PC running gaming hardware.
+One explanation for the performance loss can be the different platforms.
+It is possible, that running on CUDA creates an overhead, that was to big for the small neural network, so that the conduction work was fast and direct on the CPU, but slow and costly on the GPU, because meta data has to be transferred between CPU and GPU.
+The high frequency of the CPU presumably resulted in a fast training.
+
+Testing this theory with a higher node and epoch count was not successful as the wait times increased massively and the same results showed up.
+Different kinds of neural networks with more inner layers and algorithms could be used, but the complexity was too high, and the test accuracy dropped significantly.
 
 
 
