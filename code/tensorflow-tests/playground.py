@@ -24,7 +24,7 @@ test_images = test_images / 255.0
 
 print("---- Setup Layers ----")
 EPOCHS = 1
-NODES = 5000
+NODES = 100
 
 model = keras.Sequential([
     keras.layers.Flatten(input_shape=(28, 28)),
